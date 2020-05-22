@@ -8,6 +8,7 @@ include_once JWT.'SignatureInvalidException.php';
 include_once JWT.'JWT.php';
 use \Firebase\JWT\JWT;
 
+
 class Request {
 
     public $cookie;

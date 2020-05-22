@@ -4,6 +4,8 @@ include_once JWT.'BeforeValidException.php';
 include_once JWT.'ExpiredException.php';
 include_once JWT.'SignatureInvalidException.php';
 include_once JWT.'JWT.php';
+ 
+// files for decoding jwt will be here
 
 use MVC\Controller;
 
@@ -27,12 +29,8 @@ class ControllersAuthentication extends Controller{
             $this->response->sendStatus(200);
             // generate jwt
             $jwt = JWT::encode($token, 'messenger_key','HS256');
-            $this->response->setContent(json_encode(
-                array(
-                    "message" => "Successful login.",
-                    "jwt" => $jwt
-                )
-            ));
+            $message = ['jwt' => $jwt];
+            $this->response->setContent(json_encode($message));
         }
         else{
             $this->response->sendStatus(412);
@@ -53,6 +51,59 @@ class ControllersAuthentication extends Controller{
                 $this->response->setContent("Created Fail!!!");
             }
         }
+    }
+
+    public function validToken($jwt){
+        //TOOL TIP IF NOT HAVE AUTHEN FROM HEADER https://devhacksandgoodies.wordpress.com/2014/06/27/apache-pass-authorization-header-to-phps-_serverhttp_authorization/
+        $jwt = $this->request->server('HTTP_AUTHORIZATION');
+        echo $jwt;
+        if (preg_match('/Bearer\s(\S+)/', $jwt, $matches)) {
+            $jwt =  $matches[1];
+        }
+        else{
+            $jwt =  "";
+        }
+         if($jwt!=""){
+            try {
+                // decode jwt
+                $decoded = JWT::decode($jwt, 'messenger_key', array('HS256'));
+         
+                // set response code
+                // $this->response->sendStatus(200);
+    
+                // $response = json_encode(array(
+                //     "message" => "Access granted.",
+                //     "data" => $decoded->data
+                // ));
+                         
+                // $this->response->setContent($response);
+                return true;
+            }
+            catch(Exception $e){
+                    // set response code
+                // $this->response->sendStatus(401);
+                // $response = json_encode(array(
+                //     "message" => "Access denied.",
+                //         "error" => $e->getMessage()
+                // ));
+                echo json_encode(array(
+                        "message" => "Access denied.",
+                            "error" => $e->getMessage()
+                        ));
+                // $this->response->setContent($response);
+                    return false;
+            }
+        }
+        else{
+            // $this->response->sendStatus(401);
+            // $response = json_encode(array(
+            //     "message" => "Access denied."
+            // ));
+                         
+            // $this->response->setContent($response);
+            return false;
+        }
+        return false;
     }
 
 }

@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 
 // paths
 $router->get('/', function() {
@@ -12,6 +13,15 @@ $router->get('/', function() {
 $router->post('/authentication/registration', 'Authentication@registration');
 $router->post('/authentication/login', 'Authentication@login');
 $router->post('/authentication/validtoken', 'Authentication@validToken');
+
+//Users
+$router->get('/users/getAllUsers','Users@getAllUsers');
+
+$router->post('/users/getAllUsers','Users@getAllUsers');
+$router->get('/request/badrequest','Badrequest@response');
+
 ?>
+
+ 
 
 

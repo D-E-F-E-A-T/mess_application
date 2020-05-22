@@ -10,8 +10,7 @@ class ModelsAuthentication  extends Model {
         $email = $params['email'];
         $password = $params['password'];
         $sql = "SELECT * FROM MESSENGER.USERS WHERE email = '$email' AND password='$password' LIMIT 0,1";
-        echo $sql;
-        if($this->db->query($sql)->num_rows>0){
+         if($this->db->query($sql)->num_rows>0){
             return true;
         }
         else{

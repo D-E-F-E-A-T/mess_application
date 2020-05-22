@@ -6,8 +6,7 @@ class ModelsUsers  extends Model {
     
     public function getAllUsers() {
 
-        // sql statement
-        $sql = "SELECT * FROM " . DB_PREFIX . ".users";
+        $sql = "SELECT * FROM messenger.users";
  
         $query = $this->db->query($sql);
 
@@ -17,5 +16,4 @@ class ModelsUsers  extends Model {
 }
 
 
-
-?>
+ 
