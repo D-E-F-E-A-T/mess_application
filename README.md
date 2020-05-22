@@ -1,2 +1,3 @@
 A messenger application
 Author : LinhDoan.
+STATUS: "WORK IN PROGRESS"...
