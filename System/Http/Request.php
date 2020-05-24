@@ -1,13 +1,6 @@
 <?php
 
 namespace Http;
-include_once SCRIPT.'core.php';
-include_once JWT.'BeforeValidException.php';
-include_once JWT.'ExpiredException.php';
-include_once JWT.'SignatureInvalidException.php';
-include_once JWT.'JWT.php';
-use \Firebase\JWT\JWT;
-
 
 class Request {
 
@@ -16,13 +9,11 @@ class Request {
     public $request;
 
     public $files;
- 
 
     public function __construct() {
-        $this->request =  ($_REQUEST) ;
+        $this->request = ($_REQUEST);
         $this->cookie = $this->clean($_COOKIE);
         $this->files = $this->clean($_FILES);
- 
     }
 
     public function get(String $key = '') {
@@ -40,9 +31,10 @@ class Request {
     }
 
     public function input(String $key = '') {
-        $postdata = file_get_contents("php://input",true);
+        $postdata = file_get_contents("php://input");
         $request = json_decode($postdata, true);
-         if ($key != '') {
+
+        if ($key != '') {
             return isset($request[$key]) ? $this->clean($request[$key]) : null;
         } 
 
@@ -57,7 +49,6 @@ class Request {
         return strtoupper($this->server('REQUEST_METHOD'));
     }
 
-
     public function getClientIp() {
         return $this->server('REMOTE_ADDR');
     }
@@ -65,59 +56,7 @@ class Request {
     public function getUrl() {
         return $this->server('QUERY_STRING');
     }
-    public function validToken(){
-        //TOOL TIP IF NOT HAVE AUTHEN FROM HEADER https://devhacksandgoodies.wordpress.com/2014/06/27/apache-pass-authorization-header-to-phps-_serverhttp_authorization/
-        $jwt = $this->server('HTTP_AUTHORIZATION');
-        echo $jwt;
-        if (preg_match('/Bearer\s(\S+)/', $jwt, $matches)) {
-            $jwt =  $matches[1];
-        }
-        else{
-            $jwt =  "";
-        }
-         if($jwt!=""){
-            try {
-                // decode jwt
-                $decoded = JWT::decode($jwt, 'messenger_key', array('HS256'));
-         
-                // set response code
-                // $this->response->sendStatus(200);
-    
-                // $response = json_encode(array(
-                //     "message" => "Access granted.",
-                //     "data" => $decoded->data
-                // ));
-                         
-                // $this->response->setContent($response);
-                return true;
-            }
-            catch(Exception $e){
-                    // set response code
-                // $this->response->sendStatus(401);
-                // $response = json_encode(array(
-                //     "message" => "Access denied.",
-                //         "error" => $e->getMessage()
-                // ));
-                echo json_encode(array(
-                        "message" => "Access denied.",
-                            "error" => $e->getMessage()
-                        ));
-                // $this->response->setContent($response);
-                    return false;
-            }
-        }
-        else{
-            // $this->response->sendStatus(401);
-            // $response = json_encode(array(
-            //     "message" => "Access denied."
-            // ));
-                         
-            // $this->response->setContent($response);
-            return false;
-        }
-        return false;
-    }
- 
+
     private function clean($data) {
         if (is_array($data)) {
             foreach ($data as $key => $value) {
