@@ -7,11 +7,12 @@ class ModelsAuthentication  extends Model {
 
  
     public function login($params) {
-        $email = $params['email'];
+        $userName = $params['userName'];
         $password = $params['password'];
-        $sql = "SELECT * FROM MESSENGER.USERS WHERE email = '$email' AND password='$password' LIMIT 0,1";
+        $sql = "SELECT * FROM MESSENGER.auth_account WHERE userName = '$userName' AND password='$password'  ";
          if($this->db->query($sql)->num_rows>0){
-            return true;
+             echo "Result". json_encode($this->db->query($sql)->row);
+            return $this->db->query($sql);
         }
         else{
             return false;
@@ -19,17 +20,13 @@ class ModelsAuthentication  extends Model {
     }
 
     public function registration($params){
-        $phone = $params['phone'];
-        $email = $params['email'];
+        $userName = $params['userName'];
         $password = password_hash($params['password'],PASSWORD_BCRYPT);
-        $firstName = $params['firstName'];
-        $lastName = $params['lastName'];
         $isActive = 1;
-        $isReported = 0;
         $isBlocked = 0;
-        $preference = $params['preference'];
-        $sql = "INSERT INTO MESSENGER.USERS(phone, email, password, first_name, last_name, is_active, is_reported,is_blocked, preferences,created_at,updated_at)
-                VALUES('$phone','$email','$password','$firstName','$lastName',$isActive,$isReported,$isBlocked,'$preference',". "@now,@now"    .")";
+        $sql = "INSERT INTO MESSENGER.auth_account(userName, password, is_active,is_blocked,created_at,update_at)
+                VALUES( '$userName','$password',$isActive,$isBlocked,now(),now())";
+                echo $sql;
         if( $this->db->query($sql)->num_rows>0){
             return true;
         }

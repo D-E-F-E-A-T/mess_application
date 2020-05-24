@@ -1,22 +1,23 @@
 <?php
- 
+
+
 namespace Router;
- 
+
 class Router {
- 
+
+
     private $router = [];
 
- 
     private $matchRouter = [];
- 
+
     private $url;
- 
+
     private $method;
- 
+
     private $params = [];
- 
+
     private $response;
- 
+
     public function __construct(string $url, string $method) {
         $this->url = rtrim($url, '/');
         $this->method = $method;
@@ -24,27 +25,27 @@ class Router {
         // get response class of $GLOBALS var
         $this->response = $GLOBALS['response'];
     }
- 
+
     public function get($pattern, $callback) {
         $this->addRoute("GET", $pattern, $callback);
     }
- 
+
     public function post($pattern, $callback) {
         $this->addRoute('POST', $pattern, $callback);
     }
- 
+
     public function put($pattern, $callback) {
         $this->addRoute('PUT', $pattern, $callback);
     }
- 
+
     public function delete($pattern, $callback) {
         $this->addRoute('DELETE', $pattern, $callback);
     }
- 
+
     public function addRoute($method, $pattern, $callback) {
         array_push($this->router, new Route($method, $pattern, $callback));
     }
- 
+
     private function getMatchRoutersByRequestMethod() {
         foreach ($this->router as $value) {
             if (strtoupper($this->method) == $value->getMethod())
@@ -52,7 +53,6 @@ class Router {
         }
     }
 
- 
     private function getMatchRoutersByPattern($pattern) {
         $this->matchRouter = [];
         foreach ($pattern as $value) {
@@ -61,9 +61,6 @@ class Router {
         }
     }
 
-    /**
-     *  dispatch url and pattern
-     */
     public function dispatch($url, $pattern) {
         preg_match_all('@:([\w]+)@', $pattern, $params, PREG_PATTERN_ORDER);
 
@@ -90,31 +87,19 @@ class Router {
         return false;
     }
 
-    /**
-     *  get router
-     */
     public function getRouter() {
         return $this->router;
     }
 
-    /**
-     * set param
-     */
     private function setParams($key, $value) {
         $this->params[$key] = $value;
     }
 
-    /**
-     * Convert Pattern To Regex
-     */
     private function convertPatternToRegex($matches) {
         $key = str_replace(':', '', $matches[0]);
         return '(?P<' . $key . '>[a-zA-Z0-9_\-\.\!\~\*\\\'\(\)\:\@\&\=\$\+,%]+)';
     }
 
-    /**
-     *  run application
-     */
     public function run() {
         if (!is_array($this->router) || empty($this->router)) 
             throw new Exception('NON-Object Route Set');
@@ -133,9 +118,6 @@ class Router {
         }
     }
 
-    /**
-     * run as controller
-     */
     private function runController($controller, $params) {
         $parts = explode('@', $controller);
         $file = CONTROLLERS . ucfirst($parts[0]) . '.php';

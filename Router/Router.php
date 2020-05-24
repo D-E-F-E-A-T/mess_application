@@ -20,6 +20,15 @@ $router->get('/users/getAllUsers','Users@getAllUsers');
 $router->post('/users/getAllUsers','Users@getAllUsers');
 $router->get('/request/badrequest','Badrequest@response');
 
+//Conversation
+
+$router->get('/conversation/getAllConversation', 'Conversation@getAllConversation');
+
+
+//Messages
+
+$router->post('/messages/getAllMessages', 'Messages@getAllMessages');
+
 ?>
 
  

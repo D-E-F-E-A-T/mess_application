@@ -23,6 +23,7 @@ $response->setHeader('Content-Type: application/json; charset=UTF-8');
 
 $router = new Router('/' . $request->getUrl(), $request->getMethod());
 //$router = new Router('/' . strtolower($request->validToken() ? $request->getUrl() : ""), $request->getMethod());
+//$router = new Router('/' . strtolower($request->getUrl()), $request->getMethod());
 
 require 'Router/Router.php';
 
