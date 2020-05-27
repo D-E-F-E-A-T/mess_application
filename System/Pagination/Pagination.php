@@ -1,41 +1,15 @@
 <?php
 
-/**
- *
- * This file is part of mvc-rest-api for PHP.
- *
- */
 namespace Pagination;
 
-/**
- * Class Pagination, for pagination model data
- *
- * @author Mohammad Rahmani <rto1680@gmail.com>
- *
- * @package MVC
- */
 final class Pagination {
 
-    /**
-     *  number of total data
-     */
     public $total = 0;
 
-    /**
-     *  number of current page
-     */
     public $page = 1;
-    
-    /**
-     *  number of rows to show per page
-     */
+
 	public $limit = LIMIT_PRE_PAGE_SHOW_BOOKS;
-    
-    /**
-     * 
-     *
-     * @return	array
-     */
+
 	public function render() {
         $total = $this->total;
         $page_list = [];

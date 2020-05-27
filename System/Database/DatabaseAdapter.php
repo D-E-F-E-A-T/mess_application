@@ -16,25 +16,14 @@ class DatabaseAdapter {
         }
     }
 
-    /**
-     * @param $sql
-     * @return mixed
-     */
     public function query($sql) {
         return $this->dbConnection->query($sql);
     }
 
-    /**
-     * @param $value
-     * @return mixed
-     */
     public function escape($value) {
         return $this->dbConnection->escape($value);
     }
 
-    /**
-     * @return mixed
-     */
     public function getLastId() {
         return $this->dbConnection->getLastId();
     }

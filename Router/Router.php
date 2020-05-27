@@ -19,7 +19,7 @@ $router->get('/users/getAllUsers','Users@getAllUsers');
 
 $router->post('/users/getAllUsers','Users@getAllUsers');
 $router->get('/request/badrequest','Badrequest@response');
-
+$router->get('/users/getInfoUser', 'Users@getInfoUser');
 //Conversation
 
 $router->get('/conversation/getAllConversation', 'Conversation@getAllConversation');
@@ -28,6 +28,7 @@ $router->get('/conversation/getAllConversation', 'Conversation@getAllConversatio
 //Messages
 
 $router->post('/messages/getAllMessages', 'Messages@getAllMessages');
+$router->post('/messages/createNewMessage', 'Messages@createNewMessage');
 
 ?>
 

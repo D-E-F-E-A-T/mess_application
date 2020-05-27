@@ -1,12 +1,4 @@
 <?php
-// include_once SCRIPT.'core.php';
-// include_once JWT.'BeforeValidException.php';
-// include_once JWT.'ExpiredException.php';
-// include_once JWT.'SignatureInvalidException.php';
-// include_once JWT.'JWT.php';
-
- 
-// files for decoding jwt will be here
 
 use MVC\Controller;
  
@@ -20,4 +12,21 @@ class ControllersUsers extends Controller{
         $this->response->setContent($data);
  
     }
-}
+
+    public function updateUsersProfile(){
+
+    }
+    public function getInfoUser(){
+        if($this->validToken()){
+            $userName = $this->userName;
+            $model = $this->model("users");
+            if($model->getInfoUser($userName)->num_rows>0){
+                $this->response->sendStatus(200);
+                $this->response->setContent($model->getInfoUser($userName)->row);
+            }else{
+                $this->response->sendStatus(412);
+                $this->response->setContent($model->getInfoUser($userName)->row);
+            }
+        }
+    }
+ }
