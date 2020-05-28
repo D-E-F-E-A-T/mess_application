@@ -11,6 +11,12 @@ define('SYSTEM', SCRIPT . 'System/');
 define('CONTROLLERS', SCRIPT . 'Application/Controllers/');
 define('MODELS', SCRIPT . 'Application/Models/');
 define('JWT',SCRIPT.'vendor/firebase/php-jwt/src/');
+ define('SERVICES', SCRIPT . 'Application/Services');
+//define websocket
+
+define('WEBSOCKET_SERVER_IP', '127.0.0.1');
+define('WEBSOCKET_SERVER_PORT', '8080');
+
  // Config Database
 define('DATABASE', [
     'Port'   => '3307',

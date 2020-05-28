@@ -54,7 +54,7 @@ class Controller {
                 // decode jwt
                 $decoded = JWT::decode($jwt, 'messenger_key', array('HS256'));
 
-                $this->response->sendStatus(200);
+                //$this->response->sendStatus(200);
                 $array = array(
                     "message" => "Access granted.",
                     "data" => $decoded->data
@@ -69,7 +69,7 @@ class Controller {
                 return true;
             }
             catch(Exception $e){
-                 $this->response->sendStatus(401);
+                 //$this->response->sendStatus(401);
                 $response = json_encode(array(
                     "message" => "Access denied.",
                         "error" => $e->getMessage()
@@ -83,7 +83,7 @@ class Controller {
             }
         }
         else{
-            $this->response->sendStatus(401);
+           // $this->response->sendStatus(401);
             $response = json_encode(array(
                "message" => "Access denied."
             ));

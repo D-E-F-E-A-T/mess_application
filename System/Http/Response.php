@@ -123,36 +123,19 @@ class Response {
         $this->headers[] = $header;
     }
 
-    /**
-     *  Get the response Headers.
-     *
-     * @return array
-     */
+
     public function getHeader() {
         return $this->headers;
     }
 
-    /**
-     *  Set content response.
-     *
-     * @param $content
-     */
     public function setContent($content) {
         $this->content = json_encode($content);
     }
 
-    /**
-     *  Get content response.
-     *
-     * @return mixed
-     */
     public function getContent() {
         return $this->content;
     }
 
-    /**
-     * @param $url
-     */
     public function redirect($url) {
         if (empty($url)) {
             trigger_error('Cannot redirect to an empty URL.');
@@ -163,11 +146,6 @@ class Response {
         exit();
     }
 
-    /**
-     *  check status code is invalid
-     *
-     * @return bool
-     */
     public function isInvalid(int $statusCode) : bool {
         return $statusCode < 100 || $statusCode >= 600;
     }
@@ -178,9 +156,6 @@ class Response {
         }
     }
 
-    /**
-     *  Render Output
-     */
     public function render() {
         if ($this->content) {
             $output = $this->content;
