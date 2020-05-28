@@ -1,5 +1,5 @@
-A messenger application
-Author : LinhDoan.
+<H2>A messenger application<H2> </br>
+ </p><h6> Author: LinhDoan.</h6></p> </br>
 Hiện nay ứng dụng web đã phát triển khác xa so với ngày đầu nó xuất hiện, kèm theo đó là vô số các kỹ thuật mới được áp dụng để phục vụ cho quá trình này nhằm đem lại trải nghiệm mới mẻ, đầy hứng thú và cũng không kém phần tiện dụng cho người dùng.
 
 Để các bạn có 1 cái nhìn rõ ràng hơn về công nghệ web hiện đại, hôm nay mình sẽ giới thiệu với các bạn 1 số kỹ thuật hiện nay thường được sử dụng trong các ứng dụng web thời gian thực.
