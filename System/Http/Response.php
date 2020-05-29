@@ -69,28 +69,15 @@ class Response {
         511 => 'Network Authentication Required',
     ];
 
-    /**
-     * @var
-     */
+
     protected $version;
 
-    /**
-     * @var
-     */
     protected $content;
 
-    /**
-     * Response constructor.
-     */
     public function __construct () {
         $this->setVersion('1.1');
     }
 
-    /**
-     *  Set the Http protocol version
-     *
-     * @param string $version
-     */
     public function setVersion(string $version) {
         $this->version = $version;
     }
@@ -104,21 +91,10 @@ class Response {
         return $this->version;
     }
 
-    /**
-     *  Get the status code text.
-     *
-     * @param int $code
-     * @return string
-     */
     public function getStatusCodeText(int $code) : string {
         return (string) isset($this->statusTexts[$code]) ? $this->statusTexts[$code] : 'unknown status';
     }
 
-    /**
-     *  Set the response Headers.
-     *
-     * @param $header
-     */
     public function setHeader(String $header) {
         $this->headers[] = $header;
     }
