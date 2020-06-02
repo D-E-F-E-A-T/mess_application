@@ -6,11 +6,12 @@ use MVC\Controller;
 class ControllersUsers extends Controller{
  
     public function getAllUsers(){
-        $model = $this->model('users');
-        $data = $model->getAllUsers();
-        $this->response->sendStatus(201);
-        $this->response->setContent($data);
- 
+        if($this->validToken()){
+            $model = $this->model('users');
+            $data = $model->getAllUsers();
+            $this->response->sendStatus(201);
+            $this->response->setContent($data);
+        }
     }
 
     public function updateUsersProfile(){

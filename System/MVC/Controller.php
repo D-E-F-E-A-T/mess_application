@@ -16,6 +16,7 @@ class Controller {
     public $jwt;
 
     public $userName; 
+    public $id;
     public function __construct() {
         $this->request = $GLOBALS['request'];
         $this->response = $GLOBALS['response'];
@@ -66,6 +67,7 @@ class Controller {
                          
                 //$this->response->setContent($response);
                 $this->userName =  ($array['data']->userName) ;
+                $this->id = ($array['data']->id) ;
                 return true;
             }
             catch(Exception $e){
@@ -78,17 +80,18 @@ class Controller {
                         "message" => "Access denied.",
                             "error" => $e->getMessage()
                         ));
-                 //$this->response->setContent($response);
+                    $this->response->setContent($response);
                     return false;
             }
         }
         else{
            // $this->response->sendStatus(401);
             $response = json_encode(array(
-               "message" => "Access denied."
-            ));
+                "message" => "Access denied.",
+                    "error" =>"Login Failed!!!"
+                ));
                          
-            // $this->response->setContent($response);
+            $this->response->setContent($response);
             return false;
         }
         return false;

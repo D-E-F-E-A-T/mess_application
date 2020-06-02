@@ -7,5 +7,5 @@
     "ext-pdo": "*",
     "squizlabs/php_codesniffer": "*",
     "ext-json": "*"
-  }
+   }
 }

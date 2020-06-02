@@ -27,7 +27,20 @@ class ControllersMessages extends Controller{
             }
         }
     }
+    public function deleteMessage(){
+        if($this->validToken()){
+            $model = $this->model("messages");
+            $result = $model->deleteMessage($this->request->request,$this->userName );
+            if($result->num_rows>0){
+                $this->response->sendStatus(201);
+                $this->response->setContent($model->getLastMessage()->row);
+            }
+            else{
+                $this->response->sendStatus(404);
+                $this->response->setContent("No");
+            }
+        }
 
 }
 
-
+}
