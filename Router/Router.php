@@ -30,6 +30,16 @@ $router->get('/conversation/getAllConversation', 'Conversation@getAllConversatio
 $router->post('/messages/getAllMessages', 'Messages@getAllMessages');
 $router->post('/messages/createNewMessage', 'Messages@createNewMessage');
 
+
+//groups
+
+$router->get('/groups/getAllGroups', 'Groups@getAllGroups');
+$router->get('/groups/getAllTypesGroup', 'Groups@getAllTypesGroup');
+
+$router->post('/groups/createGroup', 'Groups@createGroup');
+$router->post('/groups/requestToJoinAGroup', 'Groups@requestToJoinAGroup');
+$router->get('/groups/getAllGroupJoined', 'Groups@getAllGroupJoined');
+
 ?>
 
  

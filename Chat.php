@@ -1,5 +1,4 @@
 <?php 
-
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 
@@ -7,20 +6,35 @@ use Ratchet\MessageComponentInterface;
 class Chat implements MessageComponentInterface
 {
     protected $clients = null;
-
+    protected $resource ;
     protected $users = [];
 
     protected $db = null;
 
-    public function __construct($db)
+    public function __construct()
     {
         $this->clients = new SplObjectStorage;
-        $this->db = $db;
+        try {
+            $this->db = new \PDO("mysql:host=" . "localhost" . ";port=" . "3307" . ";dbname=" . "messenger", "root", "Linh@12345", array(\PDO::ATTR_PERSISTENT => true));
+            $sql = "SELECT id, userName FROM messenger.auth_account ";
+            $query = $this->db->prepare($sql);
+            $query->setFetchMode(PDO::FETCH_ASSOC);
+            $query->execute();
+            $resultSet = $query->fetchAll();
+            foreach ($resultSet as $row) {
+                echo $row['id'] . '\n';
+                }
+        } catch(\PDOException $e) {
+            trigger_error('Error: Could not make a database link ( ' . $e->getMessage() . '). Error Code : ' . $e->getCode() . ' <br />');
+            exit();
+        }
     }
 
     public function onOpen(ConnectionInterface $conn): void
     {
         $this->clients->attach($conn);
+        $this->resource[$conn->resourceId] = $conn;
+        echo "New connection! ({$conn->resourceId})\n";
     }
 
   
@@ -47,11 +61,11 @@ class Chat implements MessageComponentInterface
                              */
                             foreach ($this->users as $resourceId => $user) {
                                 if ($resourceId == $from->resourceId) {
+                                 
                                     continue;
                                 }
 
-                                if ($user['user']->id == $package->to_user) {
-
+                                if ($user['user']->id == $package->to_user->id) {
 
                                     $targetClient = $user['client'];
                                     $targetClient->send($msg);
@@ -59,12 +73,12 @@ class Chat implements MessageComponentInterface
                                 }
                             }
                         }
-
-
                         $client->send($msg);
                     }
+ 
                     break;
                 case 'registration':
+                    echo $from->resourceId;
                     $this->users[$from->resourceId] = [
                       'user' => $package->user,
                       'client' => $from

@@ -36,4 +36,10 @@ class ModelsMessages extends Model {
         return $result ;
 
     }
+    public function deleteMessage($params,$userName){
+        $messageId = $params['message_id'];
+        $sql = "UPDATE messenger.messages SET MESSAGE = '', deleted_at = now() WHERE ID = $messageId  ";
+        $result = $this->db->query($sql);
+        return $result;
+    }
 }

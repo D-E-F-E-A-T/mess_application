@@ -23,7 +23,8 @@ class ControllersAuthentication extends Controller{
                 "iat" => 1356999524,
                 "nbf" => 1357000000,
                 "data" => array(
-                     "userName" => $params['userName']
+                     "userName" => $params['userName'],
+                     "id" => $model->login($params)->row['id']
                 )
             );
             // set response code
@@ -86,13 +87,13 @@ class ControllersAuthentication extends Controller{
                  $this->response->sendStatus(401);
                 $response = json_encode(array(
                     "message" => "Access denied.",
-                        "error" => $e->getMessage()
+                        "err" => $e->getMessage()
                 ));
                 echo json_encode(array(
                         "message" => "Access denied.",
-                            "error" => $e->getMessage()
+                            "err" => $e->getMessage()
                         ));
-                 //$this->response->setContent($response);
+                $this->response->setContent($response);
                     return false;
             }
         }
