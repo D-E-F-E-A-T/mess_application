@@ -4,12 +4,25 @@ use MVC\Model;
 
 class ModelsGroups  extends Model {
     
-    public function getAllGroups() {
+    public function getAllGroups($params) {
 
-        $sql = "SELECT * FROM messenger.group";
- 
-        $query = $this->db->query($sql);
-
+        $sql = "SELECT * FROM messenger.group ";
+        if(!empty($params) ) {
+            if(isset($params['type'])){
+                $type = $params['type'];
+                $sql = $sql. " WHERE group_type_id in ($type)";
+                if(isset($params['keySearch'])){
+                    $keySearch = $params['keySearch'];
+                    $sql = $sql. " AND group_name like N'%" . "$keySearch" . "%'"   ;
+                 }
+            }else{
+                if(isset($params['keySearch'])){
+                    $keySearch = $params['keySearch'];
+                    $sql = $sql. " WHERE  group_name like N'%" . "$keySearch" . "%'"   ;
+                }
+            }
+        }
+         $query = $this->db->query($sql);
         return $query;
     }
 
@@ -21,15 +34,20 @@ class ModelsGroups  extends Model {
 
         return $query;
     }
-    public function createGroup($params,$userCreate) { //with trigger in DB, oke fine
+    public function createGroup($params,$userCreate,$userCreateId) {  
         $groupName = $params['groupName'];
         $groupDescription = $params['groupDescription'];
         $grouptTypeId = $params['grouptTypeId'];
         $userAdmin = $userCreate;
-        $sql = "INSERT INTO `messenger`.`group`( `group_name`,`group_description`,`userAdmin`,`created_at`,`group_type_id`,`totalMember` ) VALUES ('$groupName' ,'$groupDescription','$userAdmin',NOW(),$grouptTypeId,1 );";
+        $userAdminId = $userCreateId;
+        $sql = "INSERT INTO `messenger`.`group`( `group_name`,`group_description`,`adminId`,`userAdmin`,`created_at`,`group_type_id` ) VALUES ('$groupName' ,'$groupDescription',$userAdminId,'$userAdmin',NOW(),$grouptTypeId );";
         $query = $this->db->query($sql);
-        echo $sql;
-         return $query;
+         if($query->num_rows > 0){
+            $groupId = $this->db->getLastId();
+            $sqlAfterInsert = "INSERT INTO `messenger`.`group_users` (`groupId`,`userId`) VALUES($groupId , $userAdminId );";
+            $query = $this->db->query($sqlAfterInsert);
+        }
+        return $query;
     }
     public function createARequest($params,$userCreate) {
         $groupId = $params['groupId'];
@@ -62,8 +80,36 @@ class ModelsGroups  extends Model {
         $query = $this->db->query($sql);
         return $query;
     }
-    public function getAllJoinedGroup($userId){
+    public function getAllJoinedGroup($params,$userId){
         $sql = "select * from messenger.group, messenger.group_users where messenger.group.id = messenger.group_users.groupId and messenger.group_users.userId  = $userId";
+        if(!empty($params) ) {
+            if(isset($params['type'])){
+                $type = $params['type'];
+                $sql = $sql. " AND group_type_id in ($type)";
+                if(isset($params['keySearch'])){
+                    $keySearch = $params['keySearch'];
+                    $sql = $sql. " AND group_name like N'%" . "$keySearch" . "%'"   ;
+                 }
+            }else{
+                if(isset($params['keySearch'])){
+                    $keySearch = $params['keySearch'];
+                    $sql = $sql. " AND  group_name like N'%" . "$keySearch" . "%'"   ;
+                }
+            }
+        }
+        $query = $this->db->query($sql);
+        return $query;
+    }
+
+    public function checkJoinedGroup($params,$userId){
+         $groupId = $params['groupId'];
+        $sql = "SELECT * from  messenger.group_users WHERE  messenger.group_users.groupId = $groupId AND  messenger.group_users.userId = $userId ";
+        $query = $this->db->query($sql);
+         return $query->num_rows;
+    }
+    public function getAllPostInGroup($params){
+        $groupId = $params['groupId'];
+        $sql = "SELECT * FROM messenger.post WHERE groupId = $groupId;";
         $query = $this->db->query($sql);
         return $query;
     }

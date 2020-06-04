@@ -17,11 +17,13 @@ class Controller {
 
     public $userName; 
     public $id;
+
     public function __construct() {
         $this->request = $GLOBALS['request'];
         $this->response = $GLOBALS['response'];
         $this->jwt = false;
         $this->userName = false;
+        $this->id = false;
     }
 
     public function model($model) {
@@ -66,8 +68,8 @@ class Controller {
                 ));
                          
                 //$this->response->setContent($response);
-                $this->userName =  ($array['data']->userName) ;
-                $this->id = ($array['data']->id) ;
+                $this->userName =  $array['data']->userName ;
+                $this->id = $array['data']->id ;
                 return true;
             }
             catch(Exception $e){
