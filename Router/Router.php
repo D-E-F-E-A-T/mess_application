@@ -33,13 +33,13 @@ $router->post('/messages/createNewMessage', 'Messages@createNewMessage');
 
 //groups
 
-$router->get('/groups/getAllGroups', 'Groups@getAllGroups');
+$router->post('/groups/getAllGroups', 'Groups@getAllGroups');
 $router->get('/groups/getAllTypesGroup', 'Groups@getAllTypesGroup');
 
 $router->post('/groups/createGroup', 'Groups@createGroup');
 $router->post('/groups/requestToJoinAGroup', 'Groups@requestToJoinAGroup');
-$router->get('/groups/getAllGroupJoined', 'Groups@getAllGroupJoined');
-
+$router->post('/groups/getAllGroupJoined', 'Groups@getAllGroupJoined');
+$router->post('/groups/getAllPostInGroup', 'Groups@getAllPostInGroup');
 ?>
 
  

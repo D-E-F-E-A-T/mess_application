@@ -8,7 +8,7 @@ class ControllersGroups extends Controller{
     public function getAllGroups(){
         if($this->validToken()){
             $model = $this->model('groups');
-            $data = $model->getAllGroups();
+            $data = $model->getAllGroups($this->request->request);
             $this->response->sendStatus(201);
             $this->response->setContent($data->rows);
         }
@@ -24,7 +24,7 @@ class ControllersGroups extends Controller{
     public function createGroup(){
         if($this->validToken()){
             $model = $this->model('groups');
-            $data = $model->createGroup($this->request->request,$this->userName);
+            $data = $model->createGroup($this->request->request,$this->userName,$this->id);
             if($data->num_rows>0){
                 $response = array(
                     "message" => "Create Oke."
@@ -91,7 +91,7 @@ class ControllersGroups extends Controller{
         if($this->validToken()){
             $model = $this->model('groups');
             $params = $this->request->request;
-            $data = $model->getAllJoinedGroup($this->id);
+            $data = $model->getAllJoinedGroup($this->request->request,$this->id);
             if($data->num_rows>0){
                 $response = array(
                     "message" => "Requested.",
@@ -109,6 +109,39 @@ class ControllersGroups extends Controller{
                 $this->response->setContent($response);
             }   
  
+        }
+    }
+    public function getAllPostInGroup(){
+        if($this->validToken()){
+            $model = $this->model('groups');
+            $params = $this->request->request;
+            $checkInGroup = $model->checkJoinedGroup($params, $this->id);
+            if($checkInGroup  < 1 ){
+                $this->response->sendStatus(404);
+                $response = array(
+                    "message" => "You not in this group"  
+                );
+                $this->response->setContent($response);
+            } 
+            else{
+                $data = $model->getAllPostInGroup($params );
+                if($data->num_rows>0){
+                    $response = array(
+                        "message" => "Requested.",
+                        "data" =>$data->rows 
+                    );
+                    $this->response->sendStatus(201);
+                    $this->response->setContent($response);
+                }
+                else{
+                    $response = array(
+                        "message" => "Null.",
+                        "data" =>$data->rows 
+                    );
+                    $this->response->sendStatus(201);
+                    $this->response->setContent($response);
+            }  
+            }
         }
     }
  
