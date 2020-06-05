@@ -40,6 +40,13 @@ $router->post('/groups/createGroup', 'Groups@createGroup');
 $router->post('/groups/requestToJoinAGroup', 'Groups@requestToJoinAGroup');
 $router->post('/groups/getAllGroupJoined', 'Groups@getAllGroupJoined');
 $router->post('/groups/getAllPostInGroup', 'Groups@getAllPostInGroup');
+$router->post('/groups/checkIsAdminGroup', 'Groups@checkIsAdminGroup');
+
+//post
+$router->post('/posts/getAllCommentInPost', 'Posts@getAllCommentInPost');
+$router->post('/posts/updateViewOfPost', 'Posts@updateViewOfPost');
+$router->post('/posts/getAllReplyComment', 'Posts@getAllReplyComment');
+
 ?>
 
  

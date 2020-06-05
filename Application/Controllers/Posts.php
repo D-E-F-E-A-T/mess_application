@@ -3,44 +3,33 @@
 use MVC\Controller;
  
 class ControllersPosts extends Controller{
-     public function getAllMessages(){
-         if($this->validToken()){
-            $model = $this->model('');
+    public function getAllCommentInPost(){
+        if($this->validToken()){
+            $model = $this->model('posts');
             $params = $this->request->request;
-            $data = $model->getAllMessages($params);
-            $data['currentUser'] = $this->userName;
+            $data = $model->getAllCommentInPost($params);
+            $this->response->sendStatus(201);
+            $this->response->setContent($data->rows);
+
+        }
+    }
+    public function updateViewOfPost(){
+        if($this->validToken()){
+            $model = $this->model('posts');
+            $params = $this->request->request;
+            $data = $model->updateViewOfPost($params);
             $this->response->sendStatus(201);
             $this->response->setContent($data);
-         }
-    }
-    public function createNewMessage(){
-        if($this->validToken()){
-            $model = $this->model('messages');
-            $data = $model->createNewMessage($this->request->request,$this->userName);
-            if($data->num_rows>0){
-                $this->response->sendStatus(201);
-                $this->response->setContent($model->getLastMessage()->row);
-            }
-            else{
-                $this->response->sendStatus(404);
-                $this->response->setContent("No");
-            }
         }
     }
-    public function deleteMessage(){
+    public function getAllReplyComment(){
         if($this->validToken()){
-            $model = $this->model("messages");
-            $result = $model->deleteMessage($this->request->request,$this->userName );
-            if($result->num_rows>0){
-                $this->response->sendStatus(201);
-                $this->response->setContent($model->getLastMessage()->row);
-            }
-            else{
-                $this->response->sendStatus(404);
-                $this->response->setContent("No");
-            }
+            $model = $this->model('posts');
+            $params = $this->request->request;
+            $data = $model->getAllReplyComment($params);
+            $this->response->sendStatus(201);
+            $this->response->setContent($data->rows);
+
         }
-
-}
-
+    }
 }

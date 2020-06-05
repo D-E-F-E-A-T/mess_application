@@ -144,5 +144,26 @@ class ControllersGroups extends Controller{
             }
         }
     }
+    public function checkIsAdminGroup(){
+        if($this->validToken()){
+            $model = $this->model('groups');
+            $data = $model->checkIsAdmin($this->request->request,$this->id);
+            if($data->num_rows > 0){
+                $response = array(
+                    "role" => "admin"
+                );
+                $this->response->sendStatus(201);
+                $this->response->setContent($response);
+            }
+            else{
+                $response = array(
+                    "role" => "member"
+                );
+                $this->response->sendStatus(201);
+                $this->response->setContent($response);
+            }   
+        }
+    }
+    
  
  }
