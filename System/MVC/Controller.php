@@ -82,12 +82,13 @@ class Controller {
                         "message" => "Access denied.",
                             "error" => $e->getMessage()
                         ));
-                    $this->response->setContent($response);
-                    return false;
+                $this->response->sendStatus(403);
+                $this->response->setContent($response);
+                return false;
             }
         }
         else{
-           // $this->response->sendStatus(401);
+            $this->response->sendStatus(401);
             $response = json_encode(array(
                 "message" => "Access denied.",
                     "error" =>"Login Failed!!!"

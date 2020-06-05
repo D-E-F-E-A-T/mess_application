@@ -80,6 +80,14 @@ class ModelsGroups  extends Model {
         $query = $this->db->query($sql);
         return $query;
     }
+
+    public function checkIsAdmin($params,$userId) {
+        $groupId = $params['groupId'];
+        $sql = "SELECT userAdmin from messenger.group where ID = $groupId AND adminId = $userId" ;
+        $query = $this->db->query($sql);
+        return $query;
+    }
+
     public function getAllJoinedGroup($params,$userId){
         $sql = "select * from messenger.group, messenger.group_users where messenger.group.id = messenger.group_users.groupId and messenger.group_users.userId  = $userId";
         if(!empty($params) ) {
@@ -109,7 +117,7 @@ class ModelsGroups  extends Model {
     }
     public function getAllPostInGroup($params){
         $groupId = $params['groupId'];
-        $sql = "SELECT * FROM messenger.post WHERE groupId = $groupId;";
+        $sql = "SELECT * FROM messenger.post,messenger.users_profile WHERE groupId = $groupId and  messenger.post.userPost = messenger.users_profile.id  ;";
         $query = $this->db->query($sql);
         return $query;
     }

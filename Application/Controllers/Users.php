@@ -25,8 +25,9 @@ class ControllersUsers extends Controller{
                 $this->response->sendStatus(200);
                 $this->response->setContent($model->getInfoUser($userName)->row);
             }else{
-                $this->response->sendStatus(412);
-                $this->response->setContent($model->getInfoUser($userName)->row);
+                $this->response->sendStatus(403);
+                $message = ['status' => "Login Failed"];
+                $this->response->setContent($message);
             }
         }
     }
