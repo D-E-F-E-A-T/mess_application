@@ -35,7 +35,7 @@ class ModelsPosts extends Model {
             // $sql = $sql. " `users_profile`.`userName`";
 
             
-            $sql = $sql. "FROM messenger.comment,messenger.users_profile WHERE postId = $postId AND messenger.comment.userComment = messenger.users_profile.id AND messenger.comment.parentId = 0    ORDER BY created_at DESC";
+            $sql = $sql. "FROM messenger.comment,messenger.users_profile WHERE postId = $postId AND messenger.comment.userComment = messenger.users_profile.id AND messenger.comment.parentId = 0    ORDER BY created_at ASC";
               $query = $this->db->query($sql);
             return $query;
          }
@@ -76,7 +76,7 @@ class ModelsPosts extends Model {
             // $sql = $sql. " `users_profile`.`userName`";
 
             
-            $sql = $sql. "FROM messenger.comment,messenger.users_profile WHERE parentId = $commentId AND messenger.comment.userComment = messenger.users_profile.id     ORDER BY created_at DESC";
+            $sql = $sql. "FROM messenger.comment,messenger.users_profile WHERE parentId = $commentId AND messenger.comment.userComment = messenger.users_profile.id     ORDER BY created_at ASC";
             $query = $this->db->query($sql);
            return $query;
         }

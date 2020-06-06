@@ -11,7 +11,9 @@ define('SYSTEM', SCRIPT . 'System/');
 define('CONTROLLERS', SCRIPT . 'Application/Controllers/');
 define('MODELS', SCRIPT . 'Application/Models/');
 define('JWT',SCRIPT.'vendor/firebase/php-jwt/src/');
- define('SERVICES', SCRIPT . 'Application/Services');
+define('SERVICES', SCRIPT . 'Application/Services');
+define('UPLOAD', SCRIPT . 'Application/Upload/');
+
 //define websocket
 
 define('WEBSOCKET_SERVER_IP', '127.0.0.1');

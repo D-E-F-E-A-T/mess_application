@@ -8,6 +8,8 @@ $router->get('/', function() {
         <a href="https://github.com/LingDev/mess_application" title="lingdev-github"> My profile </a>
     </div>';
 });
+$router->post('/files/uploadSimpleFile', 'Files@uploadSimpleFile');
+
 
 //Authentication
 $router->post('/authentication/registration', 'Authentication@registration');
@@ -35,12 +37,14 @@ $router->post('/messages/createNewMessage', 'Messages@createNewMessage');
 
 $router->post('/groups/getAllGroups', 'Groups@getAllGroups');
 $router->get('/groups/getAllTypesGroup', 'Groups@getAllTypesGroup');
+$router->post('/groups/getInfoOfGroup', 'Groups@getInfoOfGroup');
 
 $router->post('/groups/createGroup', 'Groups@createGroup');
 $router->post('/groups/requestToJoinAGroup', 'Groups@requestToJoinAGroup');
 $router->post('/groups/getAllGroupJoined', 'Groups@getAllGroupJoined');
 $router->post('/groups/getAllPostInGroup', 'Groups@getAllPostInGroup');
 $router->post('/groups/checkIsAdminGroup', 'Groups@checkIsAdminGroup');
+$router->post('/groups/updateGroup', 'Groups@updateGroup');
 
 //post
 $router->post('/posts/getAllCommentInPost', 'Posts@getAllCommentInPost');
