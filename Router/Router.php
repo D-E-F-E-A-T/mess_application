@@ -45,6 +45,7 @@ $router->post('/groups/getAllGroupJoined', 'Groups@getAllGroupJoined');
 $router->post('/groups/getAllPostInGroup', 'Groups@getAllPostInGroup');
 $router->post('/groups/checkIsAdminGroup', 'Groups@checkIsAdminGroup');
 $router->post('/groups/updateGroup', 'Groups@updateGroup');
+$router->post('/groups/deleteGroup', 'Groups@deleteGroup');
 
 //post
 $router->post('/posts/getAllCommentInPost', 'Posts@getAllCommentInPost');

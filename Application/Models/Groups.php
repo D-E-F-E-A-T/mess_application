@@ -39,9 +39,10 @@ class ModelsGroups  extends Model {
         $groupName = $params['groupName'];
         $groupDescription = $params['groupDescription'];
         $grouptTypeId = $params['grouptTypeId'];
+        $imgUrl =  $params['imgUrl'];
         $userAdmin = $userCreate;
         $userAdminId = $userCreateId;
-        $sql = "INSERT INTO `messenger`.`group`( `group_name`,`group_description`,`adminId`,`userAdmin`,`created_at`,`group_type_id` ) VALUES ('$groupName' ,'$groupDescription',$userAdminId,'$userAdmin',NOW(),$grouptTypeId );";
+        $sql = "INSERT INTO `messenger`.`group`( `group_name`,`group_description`,`adminId`,`userAdmin`,`created_at`,`group_type_id`,`group_avatar` ) VALUES ('$groupName' ,'$groupDescription',$userAdminId,'$userAdmin',NOW(),$grouptTypeId,'$imgUrl' );";
         $query = $this->db->query($sql);
          if($query->num_rows > 0){
             $groupId = $this->db->getLastId();
@@ -185,7 +186,13 @@ class ModelsGroups  extends Model {
         $groupDes = $params['groupDes'];
         $imgUrl = $params['imgUrl'];
         $sql = "UPDATE messenger.group ";
-        $sql .= "SET group_name = '$groupName', group_description = '$groupDes', group_avatar = '$imgUrl' WHERE id = $groupId ";
+        $sql .= "SET group_name = '$groupName', group_description = '$groupDes', group_avatar = '$imgUrl' , updated_at =now() WHERE id = $groupId ";
+        $query = $this->db->query($sql);
+        return $query;
+    }
+    public function deleteGroup($params){
+        $groupId = $params['groupId'];
+        $sql = "DELETE FROM `messenger`.`group`WHERE `id` = $groupId ";
         $query = $this->db->query($sql);
         return $query;
     }

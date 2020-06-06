@@ -194,6 +194,36 @@ class ControllersGroups extends Controller{
             }
         }
     }
+
+    public function deleteGroup(){
+        if($this->validToken()){
+            $model = $this->model('groups');
+            if($model->checkIsAdmin($this->request->request, $this->id)->num_rows > 0){
+                $data = $model->deleteGroup($this->request->request);
+                if($data->num_rows > 0 ){
+                    $response = array(
+                        "result" => "Deleted"
+                    );
+                    $this->response->sendStatus(200);
+                    $this->response->setContent($data);
+                }
+                else{
+                    $response = array(
+                        "result" => "Not found row"
+                    );
+                    $this->response->sendStatus(404);
+                    $this->response->setContent($data);
+                }
+            }
+            else{
+                $response = array(
+                    "role" => "Not Allow"
+                );
+                $this->response->sendStatus(404);
+                $this->response->setContent($response);
+            }
+        }
+    }
     
  
  }
