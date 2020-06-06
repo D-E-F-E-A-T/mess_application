@@ -22,6 +22,7 @@ class ModelsGroups  extends Model {
                 }
             }
         }
+
          $query = $this->db->query($sql);
         return $query;
     }
@@ -115,9 +116,76 @@ class ModelsGroups  extends Model {
         $query = $this->db->query($sql);
          return $query->num_rows;
     }
-    public function getAllPostInGroup($params){
+    public function getAllPostInGroup($params,$userId){
         $groupId = $params['groupId'];
-        $sql = "SELECT * FROM messenger.post,messenger.users_profile WHERE groupId = $groupId and  messenger.post.userPost = messenger.users_profile.id  ;";
+        $sql = "SELECT ";
+        $sql.= "`post`.`id`,";
+        $sql.= "`post`.`userPost`,";
+        $sql.= "`post`.`groupId`,";
+        $sql.= "`post`.`created_at`,";
+        $sql.=  "`post`.`updated_at`,";
+        $sql.=  "`post`.`deleted_at`,";
+        $sql.= "`post`.`post_title`,";
+        $sql.= "`post`.`post_content`,";
+        $sql.= "`post`.`post_img_id`,";
+        $sql.= "`post`.`views`,";
+        $sql.= "`post`.`totalComment`,";
+        $sql.= "`users_profile`.`firstName`,";
+        $sql.= " `users_profile`.`lastName`,";
+        $sql.= "`users_profile`.`avatar`,";
+        $sql.= "`users_profile`.`background_img`,";
+        $sql.= "`users_profile`.`bio`,";
+        $sql.= "`users_profile`.`from_address`,";
+        $sql.= "`users_profile`.`live_address`,";
+        $sql.=  "`users_profile`.`study_id`,";
+        $sql.= "`users_profile`.`relationship_id`,";
+        $sql.= " `users_profile`.`hobies`,";
+        $sql.= "`users_profile`.`link_id`,";
+        $sql.= "`users_profile`.`userName` ";
+        $sql.= " FROM messenger.post,messenger.users_profile WHERE groupId = $groupId and  messenger.post.userPost = messenger.users_profile.id";
+        if(isset($params['owner'])){
+            $sql .= " AND userPost = $userId";
+        }
+        $sql .= " ORDER BY created_at DESC";
+          $query = $this->db->query($sql);
+        return $query;
+    }
+    public function getNumberOfView($params){
+        $groupId = $params['groupId'];
+        $sql = "SELECT SUM(views) as 'totalViews' from  messenger.post where   messenger.post.groupId =  $groupId";
+        $query = $this->db->query($sql);
+        if(isset($query->row['totalViews'])){
+               return $query->row['totalViews'];
+        }else{
+            return 0;
+        }
+        
+    }
+    public function getNumberOfComment($params){
+        $groupId = $params['groupId'];
+        $sql = "SELECT SUM(totalComment) as 'totalComments'  from  messenger.post where   messenger.post.groupId =  $groupId";
+        $query = $this->db->query($sql);
+        if(isset($query->row['totalComments'])){
+            return $query->row['totalComments'] ;
+        }
+        else{
+            return 0;
+        }
+    }
+    public function getInfoOfGroup($params){
+        $groupId = $params['groupId'];
+        $sql = "SELECT  * FROM messenger.group  where   messenger.group.id =  $groupId";
+        $query = $this->db->query($sql);
+        return $query;
+    }
+
+    public function updateGroup($params){
+        $groupId = $params['groupId'];
+        $groupName = $params['groupName'];
+        $groupDes = $params['groupDes'];
+        $imgUrl = $params['imgUrl'];
+        $sql = "UPDATE messenger.group ";
+        $sql .= "SET group_name = '$groupName', group_description = '$groupDes', group_avatar = '$imgUrl' WHERE id = $groupId ";
         $query = $this->db->query($sql);
         return $query;
     }
