@@ -27,6 +27,7 @@ class ModelsPosts extends Model {
             $sql = $sql."    `comment`.`deleted_at`,";
             $sql = $sql."    `comment`.`comment_content`,";
             $sql = $sql."    `comment`.`parentId`,";
+            $sql = $sql."    `comment`.`parrentTag`,";
             // $sql = $sql. "`users_profile`.`id` as userProFile_Id,";
             $sql = $sql. "`users_profile`.`firstName`,";
             $sql = $sql. " `users_profile`.`lastName`,";
@@ -68,6 +69,7 @@ class ModelsPosts extends Model {
             $sql = $sql."    `comment`.`deleted_at`,";
             $sql = $sql."    `comment`.`comment_content`,";
             $sql = $sql."    `comment`.`parentId`,";
+            $sql = $sql."    `comment`.`parrentTag`,";
             // $sql = $sql. "`users_profile`.`id` as userProFile_Id,";
             $sql = $sql. "`users_profile`.`firstName`,";
             $sql = $sql. " `users_profile`.`lastName`,";
@@ -93,7 +95,7 @@ class ModelsPosts extends Model {
         $groupId = $params['groupId'];
         $postTitle = $params['postTitle'];
         $postContent = $params['postContent'];
-        $postImgUrl = $params['postContent'];
+        $postImgUrl = $params['imgUrl'];
         $sql = " INSERT INTO `messenger`.`post` (";
         $sql .="`userPost`,";
         $sql .="`groupId`,";
@@ -132,6 +134,16 @@ class ModelsPosts extends Model {
         $sql = "DELETE FROM `messenger`.`post`  where id = $postId";
          $query = $this->db->query($sql);
         return $query;
+    }
+
+    public function postComment($params,$userId){
+        $userComment = $userId;
+        $postId = $params['postId'];
+        $commentContent = $params['commentContent'];
+        $parentId = $params['parentId'];
+        $parrentTag = $params['parrentTag'];
+        $sql = "INSERT INTO `messenger`.`comment` ( `userComment`,`postId`,`created_at`, `comment_content`,`parentId`,`parrentTag`) value ($userComment, $postId,now(),'$commentContent',$parentId,'$parrentTag') ";
+         return $this->db->query($sql);
     }
   
 }

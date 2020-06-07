@@ -46,6 +46,7 @@ $router->post('/groups/getAllPostInGroup', 'Groups@getAllPostInGroup');
 $router->post('/groups/checkIsAdminGroup', 'Groups@checkIsAdminGroup');
 $router->post('/groups/updateGroup', 'Groups@updateGroup');
 $router->post('/groups/deleteGroup', 'Groups@deleteGroup');
+$router->post('/groups/getAllMemberInGroup', 'Groups@getAllMemberInGroup');
 
 //post
 $router->post('/posts/getAllCommentInPost', 'Posts@getAllCommentInPost');
@@ -54,6 +55,7 @@ $router->post('/posts/getAllReplyComment', 'Posts@getAllReplyComment');
 $router->post('/posts/createNewPost', 'Posts@createNewPost');
 $router->post('/posts/updatePost', 'Posts@updatePost');
 $router->post('/posts/deletePost', 'Posts@deletePost');
+$router->post('/posts/postComment', 'Posts@postComment');
 
 ?>
 

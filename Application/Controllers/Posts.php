@@ -100,4 +100,20 @@ class ControllersPosts extends Controller{
             }
         }
     }
+
+    public function postComment(){
+        if($this->validToken()){
+            $model = $this->model('posts');
+            $params = $this->request->request;
+            $data = $model->postComment($params,$this->id);
+            if($data->num_rows >0){
+                $this->response->sendStatus(201);
+                $this->response->setContent($data);
+            }
+            else{
+                $this->response->sendStatus(404);
+                $this->response->setContent($data);
+            }
+        }
+    }
 }
