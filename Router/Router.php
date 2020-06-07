@@ -51,6 +51,9 @@ $router->post('/groups/deleteGroup', 'Groups@deleteGroup');
 $router->post('/posts/getAllCommentInPost', 'Posts@getAllCommentInPost');
 $router->post('/posts/updateViewOfPost', 'Posts@updateViewOfPost');
 $router->post('/posts/getAllReplyComment', 'Posts@getAllReplyComment');
+$router->post('/posts/createNewPost', 'Posts@createNewPost');
+$router->post('/posts/updatePost', 'Posts@updatePost');
+$router->post('/posts/deletePost', 'Posts@deletePost');
 
 ?>
 

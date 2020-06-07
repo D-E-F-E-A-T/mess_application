@@ -189,7 +189,7 @@ class ControllersGroups extends Controller{
                 $response = array(
                     "role" => "Not Allow"
                 );
-                $this->response->sendStatus(404);
+                $this->response->sendStatus(405);
                 $this->response->setContent($response);
             }
         }
@@ -219,7 +219,7 @@ class ControllersGroups extends Controller{
                 $response = array(
                     "role" => "Not Allow"
                 );
-                $this->response->sendStatus(404);
+                $this->response->sendStatus(405);
                 $this->response->setContent($response);
             }
         }
