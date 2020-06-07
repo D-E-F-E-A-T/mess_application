@@ -200,6 +200,12 @@ class ModelsGroups  extends Model {
         $query = $this->db->query($sql);
         return $query;
     }
+
+    public function getAllMemberInGroup($params){
+        $groupId = $params['groupId'];
+        $sql = "SELECT messenger.users_profile.* FROM messenger.users_profile ,messenger.group,messenger.group_users WHERE messenger.users_profile.id = messenger.group_users.userId and messenger.group.id = messenger.group_users.groupId and messenger.group_users.groupId = $groupId";
+         return $this->db->query($sql);
+    }
 }
 
 

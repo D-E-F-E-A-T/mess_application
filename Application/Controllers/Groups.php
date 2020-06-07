@@ -224,6 +224,13 @@ class ControllersGroups extends Controller{
             }
         }
     }
-    
+    public function getAllMemberInGroup(){
+        if($this->validToken()){
+            $model = $this->model('groups');
+            $data = $model->getAllMemberInGroup($this->request->request);
+            $this->response->sendStatus(200);
+            $this->response->setContent($data);
+        }
+    }
  
  }
