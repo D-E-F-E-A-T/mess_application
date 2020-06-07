@@ -5,8 +5,15 @@ header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 header('Access-Control-Max-Age: 1000');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
 use MVC\Model;
-
+ 
 class ModelsPosts extends Model {
+
+    public function checkPostIsOwner($params,$userId){
+        $postId = $params['postId'];
+        $userPost = $userId;
+        $sql = "SELECT * FROM `messenger`.`post` where id = $postId and userPost = $userPost";
+         return $this->db->query($sql);
+    }
 
      public function getAllCommentInPost($params){
          if(isset($params['postId'])){
@@ -35,7 +42,7 @@ class ModelsPosts extends Model {
             // $sql = $sql. " `users_profile`.`userName`";
 
             
-            $sql = $sql. "FROM messenger.comment,messenger.users_profile WHERE postId = $postId AND messenger.comment.userComment = messenger.users_profile.id AND messenger.comment.parentId = 0    ORDER BY created_at ASC";
+            $sql = $sql. "FROM messenger.comment,messenger.users_profile WHERE postId = $postId AND messenger.comment.userComment = messenger.users_profile.id AND messenger.comment.parentId = 0    ORDER BY created_at ASC   ";
               $query = $this->db->query($sql);
             return $query;
          }
@@ -81,9 +88,50 @@ class ModelsPosts extends Model {
            return $query;
         }
     }
-    public function createNewComment(){
-
+    public function createNewPost($params, $userId){
+        $userPost = $userId;
+        $groupId = $params['groupId'];
+        $postTitle = $params['postTitle'];
+        $postContent = $params['postContent'];
+        $postImgUrl = $params['postContent'];
+        $sql = " INSERT INTO `messenger`.`post` (";
+        $sql .="`userPost`,";
+        $sql .="`groupId`,";
+        $sql .="`created_at`,";
+        $sql .="`post_title`,";
+        $sql .="`post_content`,";
+        $sql .="`postImgUrl`)";
+        $sql .=" VALUES (";
+        $sql .="$userPost,";
+        $sql .="$groupId,";
+        $sql .="now(),";
+        $sql .="'$postTitle',";
+        $sql .="'$postContent',";
+        $sql .="'$postImgUrl');";
+        $query = $this->db->query($sql);
+        echo $sql;
+        return $query;
     }
 
+    public function updatePost($params){
+        $postId = $params['postId'];
+        $postTitle = $params['postTitle'];
+        $postContent = $params['postContent'];
+        $postImgUrl = $params['postImgUrl'];
+        $sql = "UPDATE `messenger`.`post` SET";
+        $sql .= "`updated_at` = now(),";
+        $sql .= "`post_title` = '$postTitle',";
+        $sql .= "`post_content` = '$postContent',";
+        $sql .= "`postImgUrl` = '$postImgUrl'";
+        $sql .= "WHERE `id` = $postId";
+        $query = $this->db->query($sql);
+         return $query;
+    }
+    public function deletePost($params){
+        $postId = $params['postId']; 
+        $sql = "DELETE FROM `messenger`.`post`  where id = $postId";
+         $query = $this->db->query($sql);
+        return $query;
+    }
   
 }

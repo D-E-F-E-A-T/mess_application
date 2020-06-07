@@ -128,7 +128,7 @@ class ModelsGroups  extends Model {
         $sql.=  "`post`.`deleted_at`,";
         $sql.= "`post`.`post_title`,";
         $sql.= "`post`.`post_content`,";
-        $sql.= "`post`.`post_img_id`,";
+        $sql.= "`post`.`postImgUrl`,";
         $sql.= "`post`.`views`,";
         $sql.= "`post`.`totalComment`,";
         $sql.= "`users_profile`.`firstName`,";
@@ -148,7 +148,7 @@ class ModelsGroups  extends Model {
             $sql .= " AND userPost = $userId";
         }
         $sql .= " ORDER BY created_at DESC";
-          $query = $this->db->query($sql);
+         $query = $this->db->query($sql);
         return $query;
     }
     public function getNumberOfView($params){
@@ -175,9 +175,13 @@ class ModelsGroups  extends Model {
     }
     public function getInfoOfGroup($params){
         $groupId = $params['groupId'];
-        $sql = "SELECT  * FROM messenger.group  where   messenger.group.id =  $groupId";
+        $sql = "SELECT  messenger.group.*, users_profile.firstName,users_profile.lastName FROM messenger.group, messenger.users_profile  where   messenger.group.id =  $groupId AND group.adminId = users_profile.id ";
         $query = $this->db->query($sql);
-        return $query;
+        if($query->num_rows > 0){
+            $time = strtotime($query->row['created_at']);
+            $query->row['created_at'] = date("d/m/yy ", $time);
+        }
+          return $query;
     }
 
     public function updateGroup($params){
